@@ -1,0 +1,6 @@
+notebook
+numpy
+pandas
+seaborn
+matplotlib
+tqdm
