@@ -1,0 +1,44 @@
+% General Style
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,width=160mm,top=25mm,bottom=25mm,bindingoffset=1cm,headheight=14mm]{geometry}
+\usepackage[skip=10pt,tocskip=1.5pt,indent=6mm]{parskip}
+
+% References
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+% Hyperlinks
+\usepackage[dvipsnames]{xcolor}
+\newcommand{\MB}{MidnightBlue}
+\usepackage[linktoc=all,colorlinks=true,citecolor=\MB,linkcolor=\MB,urlcolor=\MB]{hyperref}
+
+% Images
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+% Lorem Ipsum
+\usepackage{lipsum}
+
+% Headers Twosided
+\usepackage{fancyhdr}
+\fancyhead{}
+\fancyhead[RO]{\small{CHAPTER \thechapter}}
+\fancyhead[LE]{\small{\leftmark}}
+% \fancyhead[L]{\small{\leftmark}} % For oneside headers
+
+% Subplots of images
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Math equations
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e} % for algorithms
+\usepackage{minted} % for Python code
+
+
+% Table of Contents (to be used without roman numbering)
+% \AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}}
+
+% List of Figures (to be used without roman numbering)
+% \AtBeginDocument{\addtocontents{lof}{\protect\thispagestyle{empty}}}

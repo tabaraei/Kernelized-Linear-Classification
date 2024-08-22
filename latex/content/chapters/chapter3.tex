@@ -1,0 +1,63 @@
+
+A common characteristic of many algorithms is that they include a set of hyper-parameters that are not determined by the algorithm itself, but rather chosen by a human. These hyper-parameters define a class of predictors, which can be represented as $\{A_\theta: \theta \in \Theta\}$. In order to tune the hyper-parameters, the \textit{K-fold Cross-Validation} and \textit{K-fold Nested Cross-Validation} techniques are among our choices, which are described in the following.
+
+% ------------------------------------------------------
+\section{K-fold Cross-Validation}
+
+For a fixed given hyper-parameter $\theta$, we can use this technique to estimate $\mathbb{E}[\ell_{D}(A_\theta(S))]$ as follows:
+\begin{itemize}
+    \item Let $S$ be the entire dataset of size $m$, where we partition it into $K$ subsets (folds) $S_1, \dots, S_K$ of size $m/K$ each. $S_i$ denotes the testing part while $S_{-i} \equiv S\ \backslash\  S_i$ denotes the training part for the $i$-th fold and $i = 1, \dots, K$.
+    \item In order to estimate the $\mathbb{E}[\ell_{D}(A_\theta(S))]$, we first run $A$ on each \textit{training part} $S_{-i}$ of the folds $i = 1, \dots, K$ and obtain the predictors $h_i = A(S_{-i}) \dots, h_K = A(S_{-K})$. Then, We take an average error on the \textit{testing part} of each fold:
+    \begin{equation}
+        \ell_{S_{i}}(h_i) = \frac{K}{m} \sum_{(\boldsymbol{x},y) \in S_{i}} \ell(y, h_i(\boldsymbol{x}))    
+    \end{equation}
+    \item Finally, we compute the K-fold CV estimate denoted by $\ell_{S}^{CV}(A)$ by averaging these errors:
+    \begin{equation}
+        \ell_{S}^{CV}(A) = \frac{1}{K} \sum\limits_{i=1}^{K} \ell_{S_{i}}(h_i)
+    \end{equation}
+\end{itemize}
+
+Tuning hyper-parameters on a given training set aims to achieve the smallest risk. In practice, we aim to find $\theta^* \in \Theta$ such that:
+\begin{equation}
+    \ell_{D}(A_{\theta^*}(S)) = \min_{\theta \in \Theta_0} \ell_{D}(A_\theta(S))
+\end{equation}
+
+After splitting the training set into $S_{\text{train}}$ and $S_{\text{dev}}$, the algorithm is run on $S_{\text{train}}$ once for each of the hyper-parameters in $\Theta_0$, and the resulting predictors are tested on the development set $S_{\text{dev}}$. Choosing the hyper-parameters with the smallest error on the validation set, we obtain the final predictor by re-training the learning algorithm on the original training set we had before splitting.
+
+% ------------------------------------------------------
+\section{K-fold Nested Cross-Validation}
+
+Tuning hyper-parameters via this technique aims to estimate the performance of $A_\theta$ on a typical training set of a given size when $\theta$ is tuned on the training set, which is computed by averaging the performance of predictors obtained with potentially different values of their hyper-parameters, according to the following pseudo-code:
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \DontPrintSemicolon
+    \caption{K-fold Nested Cross-Validation} \vspace{5pt}
+    \KwIn{Dataset $S$}
+    % \KwResult{$(\epsilon_1 + \dots + \epsilon_K) / K$}
+    Split $S$ into $K$ folds $S_1, \dots, S_K$\\
+    \For{$i = 1, \dots, K$}{
+        \;\;Compute $S_{-i} \equiv S\ \backslash\  S_i$, the training part of $i$-th fold\\
+        Run CV on $S_{-i}$ for each $\theta \in \Theta_0$ and find $\theta_i = \underset{\theta \in \Theta_0}{\textmd{argmin}}\ \ell_{S_{-i}}^{CV}(A_{\theta})$\\
+        Re-train $A_{\theta_i}$ on the training part $S_{-i}$ to get the predictor $h_i = A_{\theta_i}(S_{-i})$\\            
+        Compute $\varepsilon_i = \ell_{S_i}(h_i)$, the error of the testing part of $i$-th fold
+    }
+    \KwOut{$\frac{1}{K}\sum\limits_{i=1}^{K}\varepsilon_i$}
+\end{algorithm}\vspace{5pt}
+
+In the Appendix~\ref{appendix:nestedcv}, the Python implementation of this technique can be found. The \texttt{NestedCV} class is designed to take in a \texttt{dataset}, \texttt{model}, \texttt{param\_grid}, \texttt{outer\_K}, and \texttt{inner\_K} as inputs, where for all experiments in the project we set \texttt{outer\_K} and \texttt{inner\_K} to \texttt{5} and \texttt{4}, respectively. It performs nested cross-validation for the specified model across various hyper-parameter combinations defined in the parameter grid. The class optimizes hyper-parameters using the validation set, trains the model on the training set, and evaluates performance on the test set.
+
+This approach ensures a robust and sound evaluation process, avoiding data leakage. We will utilize this module in the following sections as we train and evaluate different models, reporting the \texttt{accuracy}, \texttt{precision}, and \texttt{recall} measures, which are defined as:
+
+\begin{equation}
+    \text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}
+\end{equation}
+\begin{equation}
+    \text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
+\end{equation}
+\begin{equation}
+    \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\end{equation}
+
+
+

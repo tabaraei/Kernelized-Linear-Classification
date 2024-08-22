@@ -1,0 +1,30 @@
+
+Linear predictors $h(x) = \text{sgn}(w^Tx)$ for $\mathcal{X} \in \mathbb{R}^d$ and $w \in \mathbb{R}^d$ have as many learnable parameters as the number of features. Therefore, the variance (estimation) error is low, while they may potentially suffer from a large bias (approximation) error.
+
+\textit{Feature expansion} is a well-known technique to overcome the bias issue by introducing new features through nonlinear combinations of the base features. Training a linear predictor upon a feature-expanded training set, we can boost the performance of classifiers to learn new shapes, such as surfaces including ellipses, parabolas, and hyperbolas in the second-degree polynomial feature expansion case. More formally:
+\begin{equation}
+    (x_1, ..., x_d) \in \mathbb{R}^d \xrightarrow{\phi} \phi(x) \in \mathbb{R}^N  \quad \text{where} \quad N \gg d
+\end{equation}
+
+In general with $d$ features, the feature map $\phi: \mathbb{R}^d \rightarrow \mathbb{R}^N$ use as features all monomials of degree up to $N$, such that:
+\begin{equation}
+    \prod_{s=1}^{k} x_{v_s} \quad \text{for all} \quad v \in \{1, ..., d\}^k \quad \text{and for all} \quad k = 0, 1, ..., n
+\end{equation}
+
+In this project, we will use the polynomial feature expansion of degree 2, re-training the models implemented in the previous chapter for such a feature-expanded training set. In the Appendix~\ref{appendix:feature_expansion}, the corresponding implementation of \texttt{FeatureExpandedNestedCV} is provided, which inherits all the functions and parameters from \texttt{NestedCV}, adding the second-degree polynomial expansion on top of them. All the experiments were run using the same \texttt{param\_grid} and parameters as before, and the results are summarized below.
+
+
+% ------------------------------------------------------
+\section{Feature-Expanded Perceptron}
+
+The entire hyper-parameter optimization process took \texttt{3min 45s} to be finished. The training set achieved an average accuracy of \texttt{92.69\%}, with a precision of \texttt{90.52\%} and a recall of \texttt{95.02\%}. The test set had an average accuracy of \texttt{92.38\%}, with precision at \texttt{89.95\%} and recall at \texttt{95.02\%}.
+
+% ------------------------------------------------------
+\section{Feature-Expanded Pegasos for SVM}
+
+Hyper-parameter tuning was performed in a \texttt{20s} time-frame. The average results on the training set were an accuracy of \texttt{91.61\%}, precision of \texttt{92.50\%}, and recall of \texttt{89.93\%}. The test set yielded an average accuracy of \texttt{91.94\%}, precision of \texttt{92.94\%}, and recall of \texttt{90.18\%}.
+
+% ------------------------------------------------------
+\section{Feature-Expanded Logistic Classification}
+
+The hyper-parameter optimization process was completed in \texttt{20s}. The training set achieved an average accuracy of \texttt{91.01\%}, a precision of \texttt{90.25\%}, and a recall of \texttt{91.31\%}. The test set results showed an average accuracy of \texttt{90.74\%}, with a precision of \texttt{89.87\%} and a recall of \texttt{91.13\%}.

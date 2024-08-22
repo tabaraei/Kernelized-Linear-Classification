@@ -1,0 +1,28 @@
+\vspace*{-0.7cm}
+    \hspace{-7mm}\vspace{2pt} \underline{\ProjectTitle} \\
+    \textit{\AuthorName} \\
+\vspace*{-0.7cm}
+
+\section*{Abstract}
+
+% ----------------- CONTENT GOES HERE -----------------
+
+In this project~\cite{tabaraei2024github}, we explored the classification of labels based on numerical features using various machine learning algorithms implemented from scratch, including the Perceptron, Pegasos SVM, and regularized logistic classification. The dataset, comprising 10 numerical features and 10,000 samples, was loaded and processed using Python's Pandas and Numpy libraries. Initial data exploration confirmed the absence of missing values and duplicates, and the distribution of both features and target labels was analyzed to inform preprocessing strategies.
+
+Key preprocessing steps included feature scaling through Z-score normalization and outlier removal using the Interquartile Range (IQR) method. Feature selection was performed based on correlation analysis, leading to the exclusion of highly correlated features to prevent redundancy and improve model performance.
+
+Using K-fold Nested Cross-Validation as our hyper-parameter tuning method, the models were evaluated along the dataset confirming a sound procedure and ensuring an unbiased evaluation of the models. We evaluated the models' performance using accuracy, precision, and recall as metrics, and also analyzed their computational efficiency in terms of runtime. Throughout the analysis, careful attention was paid and overfitting was avoided, while mild underfitting persisted in some baseline models.
+
+The study revealed that baseline models exhibited limited performance on non-linearly separable data due to their linear nature. However, both feature-expanded and kernelied implementations of baseline models resulted in significant performance improvements, with the Polynomial Kernel Perceptron emerging as the top performer. 
+
+\noindent \textbf{Keywords:} Perceptron, Pegasos for SVM, Feature-Expansion, Kernels
+% -----------------------------------------------------
+
+
+
+\vfill
+\begin{center}
+    \UniversityName \\
+    \CurriculumDate \\
+\end{center}
+\newpage

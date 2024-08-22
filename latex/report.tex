@@ -1,0 +1,63 @@
+
+\documentclass[12pt,twoside]{report}
+\input{structure/packages}
+\input{structure/style}
+
+
+\begin{document}
+
+    % -------------------------------------------------
+    %                 PRELIMINARY SECTION
+    % -------------------------------------------------
+
+    \pagestyle{empty}
+    \input{content/title}
+    \input{content/abstract}
+
+    \pagestyle{plain}
+    \pagenumbering{Roman}
+    \input{content/declaration}
+    \input{content/toc}
+
+    % -------------------------------------------------
+    %                 CHAPTERS SECTION
+    % -------------------------------------------------
+    
+    \pagestyle{fancy}
+    \pagenumbering{arabic}
+    
+    \chapter{Data Loading and Exploration}
+    \input{content/chapters/chapter1}
+    
+    \chapter{Data Preprocessing}
+    \input{content/chapters/chapter2}
+    
+    \chapter{Hyper-parameter Tuning and Model Evaluation}
+    \input{content/chapters/chapter3}
+    
+    \chapter{Model Implementation}
+    \input{content/chapters/chapter4}
+
+    \chapter{Feature Expansion}
+    \input{content/chapters/chapter5}
+
+    \chapter{Kernel Methods}
+    \input{content/chapters/chapter6}
+
+    \chapter{Results}
+    \input{content/chapters/results}
+    
+    \chapter{Conclusion}
+    \input{content/chapters/conclusion}
+
+    % -------------------------------------------------
+    %                  ENDING SECTION
+    % -------------------------------------------------
+
+    \pagestyle{plain}
+    \printbibliography
+
+    \appendix
+    \input{content/appendix}
+
+\end{document}
